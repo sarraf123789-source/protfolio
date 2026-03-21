@@ -8,20 +8,29 @@ const DATA_PATH = path.join(process.cwd(), "src/lib/data.json")
 
 export async function GET() {
     try {
-        // 1. Load defaults from data.json first
+        // 1. Load data.json (always the latest saved state)
         const localDataRaw = await fs.readFile(DATA_PATH, "utf8")
-        const content = JSON.parse(localDataRaw)
+        const localContent = JSON.parse(localDataRaw)
 
-        // 2. Try fetching from Supabase and merge
+        // 2. Try Supabase as a base (for cloud-only sections if any)
+        //    But data.json always wins — it's saved by every admin POST
         const { data: supabaseData, error } = await supabase
             .from('portfolio_content')
             .select('*')
-        
+
+        let content: any = {}
+
+        // Start with Supabase as base
         if (!error && supabaseData && supabaseData.length > 0) {
             supabaseData.forEach(row => {
                 content[row.key] = row.data
             })
         }
+
+        // data.json ALWAYS overrides Supabase (it's the source of truth)
+        Object.keys(localContent).forEach(key => {
+            content[key] = localContent[key]
+        })
 
         return NextResponse.json(content, {
             headers: { "Cache-Control": "no-store, max-age=0" }
