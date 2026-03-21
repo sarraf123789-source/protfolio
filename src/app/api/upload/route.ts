@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server"
-import fs from "fs/promises"
-import path from "path"
+import { supabase } from "@/lib/supabase"
 
 export async function POST(req: Request) {
     try {
@@ -11,27 +10,30 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "No file uploaded" }, { status: 400 })
         }
 
-        const bytes = await file.arrayBuffer()
-        const buffer = Buffer.from(bytes)
+        const buffer = Buffer.from(await file.arrayBuffer())
+        const filename = `${Date.now()}-${file.name.replace(/\s+/g, "-")}`
 
-        // Ensure public/uploads directory exists
-        const uploadDir = path.join(process.cwd(), "public/uploads")
-        try {
-            await fs.access(uploadDir)
-        } catch {
-            await fs.mkdir(uploadDir, { recursive: true })
+        // Upload to Supabase Storage Bucket 'portfolio'
+        const { data, error } = await supabase.storage
+            .from('portfolio')
+            .upload(filename, buffer, {
+                contentType: file.type,
+                upsert: true
+            })
+
+        if (error) {
+            console.error("Supabase Storage Error:", error.message)
+            return NextResponse.json({ error: error.message }, { status: 500 })
         }
 
-        // Generate unique filename
-        const filename = `${Date.now()}-${file.name.replace(/\s+/g, "-")}`
-        const filePath = path.join(uploadDir, filename)
+        // Get Public URL
+        const { data: { publicUrl } } = supabase.storage
+            .from('portfolio')
+            .getPublicUrl(filename)
 
-        await fs.writeFile(filePath, buffer)
-
-        // Return the public URL
-        return NextResponse.json({ url: `/uploads/${filename}` })
+        return NextResponse.json({ url: publicUrl })
     } catch (error) {
-        console.error(error)
+        console.error("Upload Catch Error:", error)
         return NextResponse.json({ error: "Upload failed" }, { status: 500 })
     }
 }
