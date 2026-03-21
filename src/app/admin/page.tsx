@@ -19,6 +19,8 @@ export default function AdminPage() {
     const imageInputRef = useRef<HTMLInputElement>(null)
     const resumeInputRef = useRef<HTMLInputElement>(null)
     const [isUploading, setIsUploading] = useState(false)
+    const [messages, setMessages] = useState<any[]>([])
+    const [isLoadingMessages, setIsLoadingMessages] = useState(false)
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault()
@@ -29,8 +31,31 @@ export default function AdminPage() {
     useEffect(() => {
         if (isLoggedIn) {
             fetch("/api/content").then(res => res.json()).then(d => setData(d))
+            fetchMessages()
         }
     }, [isLoggedIn])
+
+    const fetchMessages = async () => {
+        setIsLoadingMessages(true)
+        try {
+            const res = await fetch("/api/contact", {
+                headers: { "Authorization": "Bearer portfolio-admin-2026" }
+            })
+            const d = await res.json()
+            if (Array.isArray(d)) setMessages(d)
+        } catch (err) { console.error(err) } finally { setIsLoadingMessages(false) }
+    }
+
+    const deleteMessage = async (id: string) => {
+        if (!confirm("Delete this message?")) return
+        try {
+            const res = await fetch(`/api/contact?id=${id}`, {
+                method: "DELETE",
+                headers: { "Authorization": "Bearer portfolio-admin-2026" }
+            })
+            if (res.ok) fetchMessages()
+        } catch (err) { console.error(err) }
+    }
 
     const handleSave = async () => {
         setIsSaving(true)
@@ -132,6 +157,7 @@ export default function AdminPage() {
                         { id: "education", icon: <GraduationCap size={20} />, label: "Education" },
                         { id: "certificates", icon: <Award size={20} />, label: "Certificates" },
                         { id: "footer", icon: <AtSign size={20} />, label: "Contact & Footer" },
+                        { id: "messages", icon: <Mail size={20} />, label: "Inquiries" },
                     ].map(item => (
                         <button key={item.id} onClick={() => setActiveTab(item.id)} className={`flex items-center gap-4 px-6 py-4 rounded-2xl font-bold transition-all whitespace-nowrap w-full ${activeTab === item.id ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "text-muted-foreground hover:bg-secondary/40"}`}>
                             {item.icon} {item.label}
@@ -518,6 +544,41 @@ export default function AdminPage() {
                                         </div>
                                     </div>
                                 </div>
+                            </motion.div>
+                        )}
+                        {activeTab === "messages" && (
+                            <motion.div key="messages" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
+                                <div className="flex justify-between items-center px-4">
+                                    <h2 className="text-2xl font-bold flex items-center gap-3"><Mail className="text-primary" /> Received Inquiries</h2>
+                                    <button onClick={fetchMessages} disabled={isLoadingMessages} className="text-xs font-black uppercase text-primary hover:underline tracking-widest px-2">Refresh</button>
+                                </div>
+                                {isLoadingMessages ? (
+                                    <div className="text-center py-20 text-muted-foreground font-bold italic">Checking for new messages...</div>
+                                ) : messages.length === 0 ? (
+                                    <div className="glass p-20 rounded-[3.5rem] border border-border/50 text-center space-y-4">
+                                        <div className="h-16 w-16 rounded-2xl bg-secondary/50 flex items-center justify-center mx-auto text-muted-foreground"><Mail size={32} /></div>
+                                        <p className="text-muted-foreground font-medium">Your inbox is currently empty. No messages yet!</p>
+                                    </div>
+                                ) : (
+                                    <div className="grid gap-6">
+                                        {messages.map((m: any) => (
+                                            <div key={m.id} className="glass p-8 rounded-[2.5rem] border border-border/50 group relative">
+                                                <button onClick={() => deleteMessage(m.id)} className="absolute top-8 right-8 p-2 text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={20} /></button>
+                                                <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+                                                    <div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-xl">{m.name ? m.name[0] : "?"}</div>
+                                                    <div>
+                                                        <h3 className="text-xl font-black">{m.name}</h3>
+                                                        <p className="text-sm text-primary font-bold">{m.email}</p>
+                                                    </div>
+                                                    <span className="md:ml-auto text-[10px] font-black uppercase tracking-widest text-muted-foreground">{new Date(m.created_at).toLocaleDateString()}</span>
+                                                </div>
+                                                <div className="bg-background/50 p-6 rounded-2xl border border-border/30 text-muted-foreground font-medium leading-relaxed whitespace-pre-wrap">
+                                                    {m.message}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </motion.div>
                         )}
                     </AnimatePresence>

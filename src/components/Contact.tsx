@@ -6,12 +6,36 @@ import { Mail, MapPin, Calendar, Send, CheckCircle2 } from "lucide-react"
 import { useState } from "react"
 export function Contact({ data }: { data?: any }) {
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const contactInfo = data?.contact || {}
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsSubmitted(true)
-    setTimeout(() => setIsSubmitted(false), 5000)
+    setIsSubmitting(true)
+    
+    const formData = new FormData(e.currentTarget)
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message")
+    }
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+
+      if (res.ok) {
+        setIsSubmitted(true)
+        setTimeout(() => setIsSubmitted(false), 5000)
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -113,21 +137,25 @@ export function Contact({ data }: { data?: any }) {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-4">
                       <label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground ml-4">Full Name</label>
-                      <input required type="text" placeholder="John Doe" className="w-full bg-secondary/30 border border-border/50 px-8 py-5 rounded-[1.8rem] outline-none focus:border-primary transition-all font-bold placeholder:text-muted-foreground/30 text-lg shadow-inner" />
+                      <input name="name" required type="text" placeholder="John Doe" className="w-full bg-secondary/30 border border-border/50 px-8 py-5 rounded-[1.8rem] outline-none focus:border-primary transition-all font-bold placeholder:text-muted-foreground/30 text-lg shadow-inner" />
                     </div>
                     <div className="space-y-4">
                       <label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground ml-4">Email Address</label>
-                      <input required type="email" placeholder="john@example.com" className="w-full bg-secondary/30 border border-border/50 px-8 py-5 rounded-[1.8rem] outline-none focus:border-primary transition-all font-bold placeholder:text-muted-foreground/30 text-lg shadow-inner" />
+                      <input name="email" required type="email" placeholder="john@example.com" className="w-full bg-secondary/30 border border-border/50 px-8 py-5 rounded-[1.8rem] outline-none focus:border-primary transition-all font-bold placeholder:text-muted-foreground/30 text-lg shadow-inner" />
                     </div>
                   </div>
                   <div className="space-y-4">
                     <label className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground ml-4">Your Message</label>
-                    <textarea required rows={6} placeholder="Tell me about your project..." className="w-full bg-secondary/30 border border-border/50 px-8 py-5 rounded-[1.8rem] outline-none focus:border-primary transition-all font-bold placeholder:text-muted-foreground/30 text-lg resize-none shadow-inner" />
+                    <textarea name="message" required rows={6} placeholder="Tell me about your project..." className="w-full bg-secondary/30 border border-border/50 px-8 py-5 rounded-[1.8rem] outline-none focus:border-primary transition-all font-bold placeholder:text-muted-foreground/30 text-lg resize-none shadow-inner" />
                   </div>
 
-                  <button type="submit" className="w-full group relative flex items-center justify-center gap-3 bg-foreground text-background px-10 py-6 rounded-[2rem] font-black text-xl hover:shadow-2xl hover:shadow-primary/20 transition-all hover:bg-primary hover:text-primary-foreground active:scale-[0.98]">
-                    Deliver Message
-                    <Send size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  <button 
+                    disabled={isSubmitting}
+                    type="submit" 
+                    className="w-full group relative flex items-center justify-center gap-3 bg-foreground text-background px-10 py-6 rounded-[2rem] font-black text-xl hover:shadow-2xl hover:shadow-primary/20 transition-all hover:bg-primary hover:text-primary-foreground active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? "Delivering..." : "Deliver Message"}
+                    {!isSubmitting && <Send size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
                   </button>
                 </motion.form>
               )}

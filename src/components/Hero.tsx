@@ -47,9 +47,9 @@ export function Hero({ data }: { data?: any }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-5xl md:text-7xl lg:text-[80px] font-black tracking-tighter mb-8 leading-[0.95]"
+              className="text-5xl md:text-7xl lg:text-[70px] font-black tracking-tighter mb-8 leading-[0.95]"
             >
-              Web <br className="hidden md:block" />
+              Junior Web <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">
                 Developer.
               </span>
