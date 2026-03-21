@@ -1,0 +1,196 @@
+{
+  "hero": {
+    "name": "Ruchi Sarraf",
+    "title": "Junior Software Developer",
+    "tagline": "Building modern, responsive web applications",
+    "description": "Motivated and detail-oriented developer with hands-on experience in building and deploying web applications. Skilled in frontend fundamentals, backend API integration, and debugging.",
+    "primaryCTA": {
+      "text": "View Projects",
+      "link": "#projects"
+    },
+    "secondaryCTA": {
+      "text": "Contact Me",
+      "link": "#contact"
+    },
+    "photoUrl": "",
+    "resumeUrl": "/uploads/1773934805298-RUCHI.pdf",
+    "socials": [
+      {
+        "platform": "GitHub",
+        "url": "https://github.com/ruchisarraf"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://linkedin.com/in/ruchisarraf"
+      },
+      {
+        "platform": "Email",
+        "url": "mailto:ruchisarraf536@gmail.com"
+      }
+    ]
+  },
+  "about": {
+    "title": "About Me",
+    "paragraphs": [
+      "I am a Junior Software Developer passionate about creating responsive, user-friendly applications and continuously learning modern technologies.",
+      "During my internship at OctaTribe, I gained hands-on experience in building and deploying web applications, integrating RESTful APIs, and optimizing frontend performance for a seamless user experience.",
+      "I believe in the power of clean code and efficient problem-solving to deliver digital solutions that truly make an impact."
+    ]
+  },
+  "technicalSkills": [
+    {
+      "category": "Frontend",
+      "items": [
+        "HTML5 & CSS3",
+        "JavaScript (Fundamentals)",
+        "React & Next.js (AI-assisted exposure)"
+      ]
+    },
+    {
+      "category": "Backend",
+      "items": [
+        "API Integration",
+        "Next.js API Routes (Basic Understanding)"
+      ]
+    },
+    {
+      "category": "Styling & UI",
+      "items": [
+        "Tailwind CSS",
+        "Responsive Web Design",
+        "UI/UX Principles"
+      ]
+    },
+    {
+      "category": "Tools & Tech",
+      "items": [
+        "TypeScript (Basic)",
+        "Git",
+        "Vercel Deployment"
+      ]
+    },
+    {
+      "category": "UI Libraries",
+      "items": [
+        "Framer Motion",
+        "Lucide React (Exposure)"
+      ]
+    },
+    {
+      "category": "Approach",
+      "items": [
+        "AI-Assisted Development (Antigravity, ChatGPT, Bolt.new)"
+      ]
+    },
+    {
+      "category": "Concepts",
+      "items": [
+        "Debugging & Testing",
+        "Performance Optimization"
+      ]
+    }
+  ],
+  "softSkills": [
+    "Effective Communication",
+    "Time Management",
+    "Problem Solving",
+    "Adaptability",
+    "Teamwork",
+    "Creativity & Innovation",
+    "Documentation & Report Preparation",
+    "Script Writing & Content Creation",
+    "Social Media Handling & Digital Marketing Basics",
+    "Microsoft Excel & Data Handling",
+    "Project Coordination & Team Collaboration"
+  ],
+  "experience": [
+    {
+      "role": "Junior Software Developer Intern",
+      "company": "OctaTribe Pvt. Ltd.",
+      "duration": "Jan 2026 – Mar 2026",
+      "responsibilities": [
+        "Developed and deployed web applications",
+        "Worked on backend API integration",
+        "Performed debugging, testing, and bug fixing",
+        "Collaborated on client-based projects and team tasks",
+        "Assisted in improving application performance and functionality"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Portfolio Website",
+      "description": "Designed and developed a personal portfolio website with a responsive layout and modern UI/UX design.",
+      "tech": [
+        "Next.js",
+        "Tailwind CSS",
+        "Framer Motion"
+      ],
+      "github": "https://github.com/ruchisarraf",
+      "demo": "https://your-portfolio-link.vercel.app",
+      "gradient": "from-blue-600/20 via-primary/10 to-transparent",
+      "icon": "User"
+    },
+    {
+      "title": "Restaurant Website",
+      "description": "Built a modern restaurant website focused on user-friendly design and interactive UI elements.",
+      "tech": [
+        "React",
+        "CSS3",
+        "Responsive Design"
+      ],
+      "github": "https://github.com/ruchisarraf",
+      "demo": "https://your-restaurant-link.vercel.app",
+      "gradient": "from-orange-500/20 via-primary/10 to-transparent",
+      "icon": "Utensils"
+    },
+    {
+      "title": "Client Website Project",
+      "description": "Developed a real-world client website with performance optimization and usability improvements.",
+      "tech": [
+        "Next.js",
+        "API Integration",
+        "Vercel"
+      ],
+      "github": "https://github.com/ruchisarraf",
+      "demo": "https://your-client-project-link.vercel.app",
+      "gradient": "from-emerald-500/20 via-primary/10 to-transparent",
+      "icon": "Globe"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor in Information Management (BIM)",
+      "institution": "Birgunj Public College",
+      "status": "Running"
+    },
+    {
+      "degree": "+2 (Higher Secondary Education)",
+      "institution": "Education Board",
+      "status": "Completed"
+    }
+  ],
+  "contact": {
+    "email": "ruchisarraf536@gmail.com",
+    "location": "Birgunj, Nepal",
+    "availability": "Available for Junior Roles"
+  },
+  "certificates": [
+    {
+      "title": "Full Stack Web Development",
+      "issuer": "Coursera / Meta",
+      "date": "2025",
+      "link": "#"
+    },
+    {
+      "title": "Responsive Design Specialization",
+      "issuer": "FreeCodeCamp",
+      "date": "2024",
+      "link": "#"
+    }
+  ],
+  "footer": {
+    "copyright": "© 2026 Ruchi Sarraf",
+    "message": "Junior Software Developer | Building Digital Solutions"
+  }
+}
