@@ -30,7 +30,7 @@ export default function AdminPage() {
 
     useEffect(() => {
         if (isLoggedIn) {
-            fetch("/api/content").then(res => res.json()).then(d => setData(d))
+            fetch(`/api/content?t=${Date.now()}`).then(res => res.json()).then(d => setData(d))
             fetchMessages()
         }
     }, [isLoggedIn])

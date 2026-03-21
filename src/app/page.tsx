@@ -16,7 +16,7 @@ export default function Home() {
   const [content, setContent] = useState<any>(null);
 
   useEffect(() => {
-    fetch("/api/content")
+    fetch(`/api/content?t=${Date.now()}`)
       .then((res) => res.json())
       .then((data) => setContent(data))
       .catch((err) => console.error("Failed to fetch content:", err));

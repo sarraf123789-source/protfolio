@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+export const dynamic = "force-dynamic"
 import fs from "fs/promises"
 import path from "path"
 import { supabase } from "@/lib/supabase"
@@ -18,12 +19,16 @@ export async function GET() {
             supabaseData.forEach(row => {
                 content[row.key] = row.data
             })
-            return NextResponse.json(content)
+            return NextResponse.json(content, {
+                headers: { "Cache-Control": "no-store, max-age=0" }
+            })
         }
 
         // 2. Fallback to data.json if Supabase is empty or errored
         const data = await fs.readFile(DATA_PATH, "utf8")
-        return NextResponse.json(JSON.parse(data))
+        return NextResponse.json(JSON.parse(data), {
+            headers: { "Cache-Control": "no-store, max-age=0" }
+        })
     } catch (error) {
         return NextResponse.json({ error: "Failed to load data" }, { status: 500 })
     }
