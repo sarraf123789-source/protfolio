@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Section } from "./Section"
-import { Layers, Database, Terminal, Sparkles, Globe, ArrowUpRight, CheckCircle2 } from "lucide-react"
+import { Layers, Database, Terminal, Sparkles, Globe, ArrowUpRight, CheckCircle2, Server, Lock, Palette, Lightbulb, FileText, ShoppingCart, Home } from "lucide-react"
 export function Skills({ data }: { data?: any }) {
   const technicalSkills = data?.technicalSkills || []
   const softSkills = data?.softSkills || []
@@ -10,11 +10,13 @@ export function Skills({ data }: { data?: any }) {
   const getIcon = (category: string) => {
     switch (category.toLowerCase()) {
       case "frontend": return <Layers size={24} />
-      case "backend": return <Database size={24} />
-      case "styling & ui": return <Globe size={24} />
-      case "tools & tech": return <Terminal size={24} />
-      case "ui libraries": return <Sparkles size={24} />
-      case "approach": return <ArrowUpRight size={24} />
+      case "backend": return <Server size={24} />
+      case "styling & ui": return <Palette size={24} />
+      case "database": return <Database size={24} />
+      case "authentication": return <Lock size={24} />
+      case "tools & platforms": return <Terminal size={24} />
+      case "concepts": return <Lightbulb size={24} />
+      case "documentation": return <FileText size={24} />
       default: return <CheckCircle2 size={24} />
     }
   }

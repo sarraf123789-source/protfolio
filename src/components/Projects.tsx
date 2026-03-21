@@ -2,10 +2,21 @@
 
 import { motion } from "framer-motion"
 import { Section } from "./Section"
-import { ExternalLink, Github, ArrowUpRight } from "lucide-react"
+import { ExternalLink, Github, ArrowUpRight, ShoppingCart, Utensils, Home, User, Globe } from "lucide-react"
 import Link from "next/link"
 export function Projects({ data }: { data?: any }) {
   const projects = data?.projects || []
+  
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case "ShoppingCart": return <ShoppingCart size={40} />
+      case "Utensils": return <Utensils size={40} />
+      case "Home": return <Home size={40} />
+      case "User": return <User size={40} />
+      case "Globe": return <Globe size={40} />
+      default: return <Globe size={40} />
+    }
+  }
 
   return (
     <Section id="projects" title="Featured Work" subtitle="A curation of projects where I've pushed the boundaries of web development and user experience.">
@@ -24,9 +35,9 @@ export function Projects({ data }: { data?: any }) {
               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none" />
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 5 }}
-                className="glass p-12 rounded-full text-primary font-black text-2xl tracking-tighter shadow-2xl shadow-primary/20 select-none"
+                className="glass p-10 rounded-full text-primary font-black shadow-2xl shadow-primary/20 select-none flex items-center justify-center"
               >
-                {project.icon}
+                {getIcon(project.icon)}
               </motion.div>
 
               {/* Floating tech badges on hover */}
