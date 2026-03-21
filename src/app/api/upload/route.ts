@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
 import { supabase } from "@/lib/supabase"
+import fs from "fs/promises"
+import path from "path"
 
 export async function POST(req: Request) {
     try {
@@ -13,7 +15,7 @@ export async function POST(req: Request) {
         const buffer = Buffer.from(await file.arrayBuffer())
         const filename = `${Date.now()}-${file.name.replace(/\s+/g, "-")}`
 
-        // Upload to Supabase Storage Bucket 'portfolio'
+        // 1. Try Supabase Storage first
         const { data, error } = await supabase.storage
             .from('portfolio')
             .upload(filename, buffer, {
@@ -21,17 +23,22 @@ export async function POST(req: Request) {
                 upsert: true
             })
 
-        if (error) {
-            console.error("Supabase Storage Error:", error.message)
-            return NextResponse.json({ error: error.message }, { status: 500 })
+        if (!error && data) {
+            // Get Public URL from Supabase
+            const { data: { publicUrl } } = supabase.storage
+                .from('portfolio')
+                .getPublicUrl(filename)
+            return NextResponse.json({ url: publicUrl })
         }
 
-        // Get Public URL
-        const { data: { publicUrl } } = supabase.storage
-            .from('portfolio')
-            .getPublicUrl(filename)
+        // 2. Fallback: save to /public/uploads/ if Supabase fails
+        console.warn("Supabase Storage failed, using local fallback:", error?.message)
+        const uploadsDir = path.join(process.cwd(), "public", "uploads")
+        await fs.mkdir(uploadsDir, { recursive: true })
+        await fs.writeFile(path.join(uploadsDir, filename), buffer)
+        const localUrl = `/uploads/${filename}`
+        return NextResponse.json({ url: localUrl })
 
-        return NextResponse.json({ url: publicUrl })
     } catch (error) {
         console.error("Upload Catch Error:", error)
         return NextResponse.json({ error: "Upload failed" }, { status: 500 })

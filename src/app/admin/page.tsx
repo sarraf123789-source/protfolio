@@ -223,6 +223,10 @@ export default function AdminPage() {
                                             <input value={data.hero.title} onChange={e => setData({ ...data, hero: { ...data.hero, title: e.target.value } })} className="w-full bg-background border border-border px-6 py-4 rounded-2xl outline-none" />
                                         </div>
                                         <div className="space-y-2 md:col-span-2">
+                                            <label className="text-[10px] font-black uppercase text-muted-foreground ml-2">Tagline (short subtitle)</label>
+                                            <input value={data.hero.tagline} onChange={e => setData({ ...data, hero: { ...data.hero, tagline: e.target.value } })} className="w-full bg-background border border-border px-6 py-4 rounded-2xl outline-none" />
+                                        </div>
+                                        <div className="space-y-2 md:col-span-2">
                                             <label className="text-[10px] font-black uppercase text-muted-foreground ml-2">Hero Description (More Bio)</label>
                                             <textarea value={data.hero.description} onChange={e => setData({ ...data, hero: { ...data.hero, description: e.target.value } })} className="w-full bg-background border border-border px-6 py-4 rounded-2xl outline-none resize-none" rows={3} />
                                         </div>
