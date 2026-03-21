@@ -49,10 +49,29 @@ export function Hero({ data }: { data?: any }) {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-5xl md:text-7xl lg:text-[70px] font-black tracking-tighter mb-8 leading-[0.95]"
             >
-              Junior Web <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">
-                Developer.
-              </span>
+              {title ? (
+                // Split title at last space to put last word on accent line
+                (() => {
+                  const words = title.split(" ")
+                  const lastWord = words.pop()
+                  const rest = words.join(" ")
+                  return (
+                    <>
+                      {rest} <br className="hidden md:block" />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">
+                        {lastWord}.
+                      </span>
+                    </>
+                  )
+                })()
+              ) : (
+                <>
+                  Junior Web <br className="hidden md:block" />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">
+                    Developer.
+                  </span>
+                </>
+              )}
             </motion.h1>
 
             <div className="space-y-4 mb-10">
