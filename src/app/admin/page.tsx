@@ -66,11 +66,18 @@ export default function AdminPage() {
                 headers: { "Content-Type": "application/json", "Authorization": "Bearer portfolio-admin-2026" },
                 body: JSON.stringify(data)
             })
+            const result = await res.json()
+            console.log("Save response:", res.status, result)
             if (res.ok) {
                 setIsSuccess(true)
                 setTimeout(() => setIsSuccess(false), 3000)
+            } else {
+                alert(`Save failed: ${result.error || "Unknown error"}. Status: ${res.status}`)
             }
-        } catch (err) { console.error(err) } finally { setIsSaving(false) }
+        } catch (err) {
+            console.error("Save error:", err)
+            alert("Save failed: network error. Check console for details.")
+        } finally { setIsSaving(false) }
     }
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'photo' | 'resume') => {

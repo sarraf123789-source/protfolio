@@ -25,9 +25,15 @@ export default function Home() {
 
     fetchContent();
 
-    // Re-fetch whenever user switches back to this tab (after editing in admin)
-    window.addEventListener("focus", fetchContent);
-    return () => window.removeEventListener("focus", fetchContent);
+    // Re-fetch when user switches back to this tab from admin
+    // visibilitychange fires on tab switch (focus does NOT)
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        fetchContent();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
   }, []);
 
   if (!content) return <div className="min-h-screen bg-background flex items-center justify-center font-black text-2xl animate-pulse">Loading Your Portfolio...</div>;
