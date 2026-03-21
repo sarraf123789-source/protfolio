@@ -4,15 +4,13 @@ import { motion } from "framer-motion"
 import { Section } from "./Section"
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
-import content from "@/lib/data.json"
-
-export function Projects() {
-  const projects = content.projects
+export function Projects({ data }: { data?: any }) {
+  const projects = data?.projects || []
 
   return (
     <Section id="projects" title="Featured Work" subtitle="A curation of projects where I've pushed the boundaries of web development and user experience.">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {projects?.map((project, idx) => (
+        {projects?.map((project: any, idx: number) => (
           <motion.div
             key={project.title}
             initial={{ opacity: 0, y: 30 }}
@@ -34,7 +32,7 @@ export function Projects() {
               {/* Floating tech badges on hover */}
               <div className="absolute inset-0 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <div className="flex flex-wrap justify-center gap-2 px-6">
-                  {project.tech?.map((t) => (
+                  {project.tech?.map((t: any) => (
                     <span key={t} className="text-[10px] font-black uppercase tracking-widest bg-primary text-primary-foreground px-3 py-1.5 rounded-full">
                       {t}
                     </span>

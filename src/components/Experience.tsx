@@ -3,16 +3,14 @@
 import { motion } from "framer-motion"
 import { Section } from "./Section"
 import { Briefcase } from "lucide-react"
-import content from "@/lib/data.json"
-
-export function Experience() {
-  const experiences = content.experience
+export function Experience({ data }: { data?: any }) {
+  const experiences = data?.experience || []
 
   return (
     <Section id="experience" title="Professional Journey" subtitle="My professional experience and growth in the tech industry.">
       <div className="max-w-4xl mx-auto">
         <div className="space-y-12">
-          {experiences?.map((exp, idx) => (
+          {experiences?.map((exp: any, idx: number) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, x: -20 }}
@@ -39,7 +37,7 @@ export function Experience() {
                 </div>
 
                 <ul className="space-y-4">
-                  {exp.responsibilities?.map((task, i) => (
+                  {exp.responsibilities?.map((task: any, i: number) => (
                     <li key={i} className="flex gap-3 text-muted-foreground leading-relaxed">
                       <span className="mt-2.5 h-1.5 w-1.5 rounded-full bg-primary/40 shrink-0" />
                       {task}

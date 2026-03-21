@@ -3,11 +3,9 @@
 import { motion } from "framer-motion"
 import { Section } from "./Section"
 import { Download, ExternalLink, Award } from "lucide-react"
-import content from "@/lib/data.json"
-
-export function About() {
-  const { title, paragraphs } = content.about
-  const resumeUrl = content.hero.resumeUrl
+export function About({ data }: { data?: any }) {
+  const { title, paragraphs } = data?.about || {}
+  const resumeUrl = data?.hero?.resumeUrl
 
   return (
     <Section id="about" title={title} subtitle="My mission is to build digital products that are as functional as they are beautiful.">
@@ -20,7 +18,7 @@ export function About() {
           className="relative text-center md:text-left"
         >
           <div className="space-y-8">
-            {paragraphs?.map((para, i) => (
+            {paragraphs?.map((para: any, i: number) => (
               <p key={i} className={`text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium ${i === 0 ? "first-letter:text-7xl first-letter:font-black first-letter:text-primary first-letter:mr-3 first-letter:float-left first-letter:leading-[0.8]" : ""}`}>
                 {para}
               </p>

@@ -3,10 +3,8 @@
 import { motion } from "framer-motion"
 import { ArrowRight, ChevronDown, Github, Linkedin, Mail, Twitter, Globe, User } from "lucide-react"
 import Link from "next/link"
-import content from "@/lib/data.json"
-
-export function Hero() {
-  const { name, title, tagline, description, primaryCTA, secondaryCTA, socials, photoUrl } = content.hero
+export function Hero({ data }: { data?: any }) {
+  const { name, title, tagline, description, primaryCTA, secondaryCTA, socials, photoUrl } = data?.hero || {}
 
   const getIcon = (platform: string) => {
     switch (platform.toLowerCase()) {
@@ -100,7 +98,7 @@ export function Hero() {
                 <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
               </Link>
               <div className="flex items-center gap-4">
-                {socials?.map((social, i) => (
+                {socials?.map((social: any, i: number) => (
                   <Link
                     key={i}
                     href={social.url}

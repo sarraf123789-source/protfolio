@@ -3,11 +3,9 @@
 import { motion } from "framer-motion"
 import { Section } from "./Section"
 import { Layers, Database, Terminal, Sparkles, Globe, ArrowUpRight, CheckCircle2 } from "lucide-react"
-import content from "@/lib/data.json"
-
-export function Skills() {
-  const technicalSkills = content.technicalSkills
-  const softSkills = content.softSkills
+export function Skills({ data }: { data?: any }) {
+  const technicalSkills = data?.technicalSkills || []
+  const softSkills = data?.softSkills || []
 
   const getIcon = (category: string) => {
     switch (category.toLowerCase()) {
@@ -26,7 +24,7 @@ export function Skills() {
       <div className="space-y-24">
         {/* Technical Skills */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {technicalSkills.map((category, idx) => (
+          {technicalSkills.map((category: any, idx: number) => (
             <motion.div
               key={category.category}
               initial={{ opacity: 0, y: 20 }}
@@ -41,7 +39,7 @@ export function Skills() {
               </div>
               <h3 className="text-xl font-black tracking-tight mb-4">{category.category}</h3>
               <ul className="space-y-3">
-                {category.items.map((skill) => (
+                {category.items.map((skill: any) => (
                   <li key={skill} className="flex items-center gap-2 text-muted-foreground font-bold text-xs tracking-tight group-hover:text-foreground transition-colors">
                     <span className="h-1 w-1 rounded-full bg-primary/40" />
                     {skill}
@@ -61,7 +59,7 @@ export function Skills() {
               <span className="text-xs font-black uppercase tracking-[0.4em] text-primary">Soft Skills</span>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              {softSkills.map((skill, idx) => (
+              {softSkills.map((skill: any, idx: number) => (
                 <motion.div
                   key={skill}
                   initial={{ opacity: 0, scale: 0.8 }}

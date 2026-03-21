@@ -2,12 +2,10 @@
 
 import Link from "next/link"
 import { Github, Linkedin, Twitter, Mail, ExternalLink, Globe } from "lucide-react"
-import content from "@/lib/data.json"
-
-export function Footer() {
-  const copyright = content.footer?.copyright
-  const message = content.footer?.message
-  const socials = content.hero?.socials
+export function Footer({ data }: { data?: any }) {
+  const copyright = data?.footer?.copyright
+  const message = data?.footer?.message
+  const socials = data?.hero?.socials
 
   const getIcon = (platform: string) => {
     switch (platform.toLowerCase()) {

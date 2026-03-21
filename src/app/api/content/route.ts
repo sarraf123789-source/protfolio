@@ -1,11 +1,27 @@
 import { NextResponse } from "next/server"
 import fs from "fs/promises"
 import path from "path"
+import { supabase } from "@/lib/supabase"
 
 const DATA_PATH = path.join(process.cwd(), "src/lib/data.json")
 
 export async function GET() {
     try {
+        // 1. Try fetching from Supabase
+        const { data: supabaseData, error } = await supabase
+            .from('portfolio_content')
+            .select('*')
+        
+        if (!error && supabaseData && supabaseData.length > 0) {
+            // Reconstruct the object: { "hero": {...}, "about": {...} }
+            const content: any = {}
+            supabaseData.forEach(row => {
+                content[row.key] = row.data
+            })
+            return NextResponse.json(content)
+        }
+
+        // 2. Fallback to data.json if Supabase is empty or errored
         const data = await fs.readFile(DATA_PATH, "utf8")
         return NextResponse.json(JSON.parse(data))
     } catch (error) {
@@ -16,14 +32,25 @@ export async function GET() {
 export async function POST(req: Request) {
     try {
         const body = await req.json()
-        // Simple password check for demo purposes
         const authHeader = req.headers.get("authorization")
         if (authHeader !== "Bearer portfolio-admin-2026") {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
         }
 
+        // 1. Update Supabase (Section by Section)
+        const sections = Object.keys(body)
+        const upsertPromises = sections.map(key => 
+            supabase
+                .from('portfolio_content')
+                .upsert({ key: key, data: body[key] }, { onConflict: 'key' })
+        )
+        
+        await Promise.all(upsertPromises)
+
+        // 2. Also save to local data.json for backup/local dev
         await fs.writeFile(DATA_PATH, JSON.stringify(body, null, 2), "utf8")
-        return NextResponse.json({ message: "Data updated successfully" })
+        
+        return NextResponse.json({ message: "Data updated successfully in Cloud & Local" })
     } catch (error) {
         return NextResponse.json({ error: "Failed to update data" }, { status: 500 })
     }

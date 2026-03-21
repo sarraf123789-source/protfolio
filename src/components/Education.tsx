@@ -3,15 +3,13 @@
 import { motion } from "framer-motion"
 import { Section } from "./Section"
 import { GraduationCap, Calendar, MapPin } from "lucide-react"
-import content from "@/lib/data.json"
-
-export function Education() {
-    const education = content.education
+export function Education({ data }: { data?: any }) {
+    const education = data?.education || []
 
     return (
         <Section id="education" title="Education" subtitle="My academic foundation and continuous learning journey.">
             <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                {education?.map((edu, idx) => (
+                {education?.map((edu: any, idx: number) => (
                     <motion.div
                         key={idx}
                         initial={{ opacity: 0, y: 20 }}

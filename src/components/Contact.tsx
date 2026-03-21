@@ -4,11 +4,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Section } from "./Section"
 import { Mail, MapPin, Calendar, Send, CheckCircle2 } from "lucide-react"
 import { useState } from "react"
-import content from "@/lib/data.json"
-
-export function Contact() {
+export function Contact({ data }: { data?: any }) {
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const contactInfo = content.contact
+  const contactInfo = data?.contact || {}
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()

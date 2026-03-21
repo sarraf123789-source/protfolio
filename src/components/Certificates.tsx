@@ -3,15 +3,13 @@
 import { motion } from "framer-motion"
 import { Section } from "./Section"
 import { Award, ExternalLink, Calendar } from "lucide-react"
-import content from "@/lib/data.json"
-
-export function Certificates() {
-  const certificates = content.certificates
+export function Certificates({ data }: { data?: any }) {
+  const certificates = data?.certificates || []
 
   return (
     <Section id="certificates" title="Certifications" subtitle="Professional certifications and specialized training I've completed.">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {certificates?.map((cert, idx) => (
+        {certificates?.map((cert: any, idx: number) => (
           <motion.div
             key={idx}
             initial={{ opacity: 0, scale: 0.95 }}
