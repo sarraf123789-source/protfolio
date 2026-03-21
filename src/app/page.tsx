@@ -16,10 +16,18 @@ export default function Home() {
   const [content, setContent] = useState<any>(null);
 
   useEffect(() => {
-    fetch(`/api/content?t=${Date.now()}`)
-      .then((res) => res.json())
-      .then((data) => setContent(data))
-      .catch((err) => console.error("Failed to fetch content:", err));
+    const fetchContent = () => {
+      fetch(`/api/content?t=${Date.now()}`)
+        .then((res) => res.json())
+        .then((data) => setContent(data))
+        .catch((err) => console.error("Failed to fetch content:", err));
+    };
+
+    fetchContent();
+
+    // Re-fetch whenever user switches back to this tab (after editing in admin)
+    window.addEventListener("focus", fetchContent);
+    return () => window.removeEventListener("focus", fetchContent);
   }, []);
 
   if (!content) return <div className="min-h-screen bg-background flex items-center justify-center font-black text-2xl animate-pulse">Loading Your Portfolio...</div>;

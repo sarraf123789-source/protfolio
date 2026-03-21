@@ -83,9 +83,36 @@ export default function AdminPage() {
             const res = await fetch("/api/upload", { method: "POST", body: formData })
             const result = await res.json()
             if (result.url) {
-                if (type === 'photo') setData({ ...data, hero: { ...data.hero, photoUrl: result.url } })
-                else setData({ ...data, hero: { ...data.hero, resumeUrl: result.url } })
-                alert("File uploaded successfully!")
+                // Construct the updated data inline (don't use setData + handleSave since setState is async)
+                const updatedData = {
+                    ...data,
+                    hero: {
+                        ...data.hero,
+                        ...(type === 'photo' ? { photoUrl: result.url } : { resumeUrl: result.url })
+                    }
+                }
+                // Update local state
+                setData(updatedData)
+                // Immediately save to Supabase + data.json
+                setIsSaving(true)
+                try {
+                    const saveRes = await fetch("/api/content", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "Authorization": "Bearer portfolio-admin-2026" },
+                        body: JSON.stringify(updatedData)
+                    })
+                    if (saveRes.ok) {
+                        setIsSuccess(true)
+                        setTimeout(() => setIsSuccess(false), 3000)
+                        alert(`${type === 'photo' ? 'Photo' : 'Resume'} uploaded and saved successfully!`)
+                    } else {
+                        alert("File uploaded but save failed. Please click 'Sync Changes'.")
+                    }
+                } catch (saveErr) {
+                    alert("File uploaded but save failed. Please click 'Sync Changes'.")
+                } finally { setIsSaving(false) }
+            } else {
+                alert("Upload failed: " + (result.error || "Unknown error"))
             }
         } catch (err) { alert("Upload failed.") } finally { setIsUploading(false) }
     }
