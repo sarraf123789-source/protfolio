@@ -1,7 +1,7 @@
 {
   "hero": {
     "name": "Ruchi Sarraf",
-    "title": "Junior Web Developer",
+    "title": "Junior Software Developer",
     "tagline": "Building modern, responsive web applications",
     "description": "Motivated and detail-oriented developer with hands-on experience in building and deploying web applications. Skilled in frontend fundamentals, backend API integration, and debugging.",
     "primaryCTA": {
@@ -12,20 +12,20 @@
       "text": "Contact Me",
       "link": "#contact"
     },
-    "photoUrl": "",
-    "resumeUrl": "/uploads/1773934805298-RUCHI.pdf",
+    "photoUrl": "https://fvdvalqrpskjzqiqkdbe.supabase.co/storage/v1/object/public/portfolio/1774149438354-WhatsApp-Image-2026-03-22-at-9.01.41-AM.jpeg",
+    "resumeUrl": "https://fvdvalqrpskjzqiqkdbe.supabase.co/storage/v1/object/public/portfolio/1774148841340-Untitled-design.pdf",
     "socials": [
       {
         "platform": "GitHub",
-        "url": "https://github.com/ruchisarraf"
-      },
-      {
-        "platform": "LinkedIn",
-        "url": "https://linkedin.com/in/ruchisarraf"
+        "url": "https://github.com/ruchisarraf1"
       },
       {
         "platform": "Email",
         "url": "mailto:ruchisarraf536@gmail.com"
+      },
+      {
+        "platform": "Github",
+        "url": "https://github.com/sarraf123789-source"
       }
     ]
   },
@@ -69,7 +69,8 @@
       "items": [
         "Supabase",
         "MySQL",
-        "Prisma (basic)"
+        "Prisma (basic)",
+        "SQ Lite"
       ]
     },
     {
@@ -133,7 +134,7 @@
   ],
   "projects": [
     {
-      "title": "Digi X Store",
+      "title": "SastoCart",
       "description": "Multi-vendor e-commerce platform with role-based dashboards and eSewa integration. Built using Next.js, NextAuth, and Prisma.",
       "tech": [
         "Next.js",
@@ -141,7 +142,7 @@
         "Prisma",
         "eSewa"
       ],
-      "github": "https://github.com/ruchisarraf",
+      "github": "https://github.com/ruchisarraf1/SastoCart",
       "demo": "https://sasto-cart.vercel.app",
       "gradient": "from-purple-600/20 via-primary/10 to-transparent",
       "icon": "ShoppingCart"
@@ -154,7 +155,7 @@
         "Tailwind CSS",
         "Vercel"
       ],
-      "github": "https://github.com/ruchisarraf",
+      "github": "https://github.com/ruchisarraf1/Resturant",
       "demo": "https://resturant-one-khaki.vercel.app",
       "gradient": "from-orange-500/20 via-primary/10 to-transparent",
       "icon": "Utensils"
@@ -169,8 +170,8 @@
         "PHP",
         "MySQL"
       ],
-      "github": "https://github.com/ruchisarraf",
-      "demo": "#",
+      "github": "https://github.com/ruchisarraf1/roomies",
+      "demo": "",
       "gradient": "from-emerald-500/20 via-primary/10 to-transparent",
       "icon": "Home"
     }
