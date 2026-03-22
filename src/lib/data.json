@@ -2,8 +2,8 @@
   "hero": {
     "name": "Ruchi Sarraf",
     "title": "Junior Software Developer",
-    "tagline": "Building modern, responsive web applications",
-    "description": "Motivated and detail-oriented developer with hands-on experience in building and deploying web applications. Skilled in frontend fundamentals, backend API integration, and debugging.",
+    "tagline": "Building responsive web applications",
+    "description": "Motivated and detail-oriented developer with hands-on experience in building and deploying web applications using AI-assisted development tools. Skilled in frontend development, backend API integration, and debugging, with a strong willingness to learn and adapt to modern technologies.",
     "primaryCTA": {
       "text": "View Projects",
       "link": "#projects"
@@ -33,7 +33,7 @@
     "title": "About Me",
     "paragraphs": [
       "I am a Junior Software Developer passionate about creating responsive, user-friendly applications and continuously learning modern technologies.",
-      "During my internship at OctaTribe, I gained hands-on experience in building and deploying web applications, integrating RESTful APIs, and optimizing frontend performance for a seamless user experience.",
+      "During my internship at OctaTribe, I gained hands-on experience in building and deploying web applications, integrating RESTful APIs, and optimizing frontend performance for a seamless user experience.I also used AI tools.",
       "I believe in the power of clean code and efficient problem-solving to deliver digital solutions that truly make an impact.",
       "My strengths include being a quick learner with adaptability to new technologies, a strong problem-solving mindset, and being detail-oriented and organized."
     ]
