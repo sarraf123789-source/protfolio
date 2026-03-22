@@ -135,8 +135,19 @@
   ],
   "projects": [
     {
-      "title": "SastoCart",
-      "description": "Multi-vendor e-commerce platform with role-based dashboards and eSewa integration. Built using Next.js, NextAuth, and Prisma.",
+      "title": "VanguardStudio – Digital Agency Platform",
+      "description": "Developed a modern agency website . Focused on responsive design, dynamic data handling, and clean UI/UX.",
+      "tech": [
+        "Next.js"
+      ],
+      "github": "https://github.com/sarraf123789-source/VanguardStudio",
+      "demo": "https://vanguard-studio-lime.vercel.app/",
+      "gradient": "from-blue-600/20 via-primary/10 to-transparent",
+      "icon": "Dgitial Agency Platform"
+    },
+    {
+      "title": "SastoCart Multi-Vendor E-Commerce Platform",
+      "description": "Built a full-stack e-commerce platform with role-based dashboards for admins, vendors, and customers. Implemented authentication, product management, and payment integration using modern web technologies.",
       "tech": [
         "Next.js",
         "NextAuth",
@@ -163,7 +174,7 @@
     },
     {
       "title": "Roomies",
-      "description": "Room & Hostel Booking System (Academic Project) with booking interface and backend logic.",
+      "description": "Developed a basic booking platform using HTML, CSS, JavaScript, PHP, and MySQL with features for browsing and booking rooms.",
       "tech": [
         "HTML",
         "CSS",
