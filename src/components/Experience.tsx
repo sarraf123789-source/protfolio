@@ -44,6 +44,20 @@ export function Experience({ data }: { data?: any }) {
                     </li>
                   ))}
                 </ul>
+
+                {exp.internshipLetterUrl && (
+                  <div className="mt-6 pt-6 border-t border-border/50">
+                    <a
+                      href={exp.internshipLetterUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-xl font-bold transition-colors text-sm"
+                    >
+                      <Briefcase size={16} />
+                      View Internship Letter
+                    </a>
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}

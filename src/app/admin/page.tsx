@@ -18,6 +18,8 @@ export default function AdminPage() {
     const [activeTab, setActiveTab] = useState("hero")
     const imageInputRef = useRef<HTMLInputElement>(null)
     const resumeInputRef = useRef<HTMLInputElement>(null)
+    const experienceLetterInputRef = useRef<HTMLInputElement>(null)
+    const [uploadingExpIdx, setUploadingExpIdx] = useState<number | null>(null)
     const [isUploading, setIsUploading] = useState(false)
     const [messages, setMessages] = useState<any[]>([])
     const [isLoadingMessages, setIsLoadingMessages] = useState(false)
@@ -80,7 +82,7 @@ export default function AdminPage() {
         } finally { setIsSaving(false) }
     }
 
-    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'photo' | 'resume') => {
+    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'photo' | 'resume' | 'experienceLetter') => {
         const file = e.target.files?.[0]
         if (!file) return
         setIsUploading(true)
@@ -91,11 +93,21 @@ export default function AdminPage() {
             const result = await res.json()
             if (result.url) {
                 // Construct the updated data inline (don't use setData + handleSave since setState is async)
-                const updatedData = {
-                    ...data,
-                    hero: {
-                        ...data.hero,
-                        ...(type === 'photo' ? { photoUrl: result.url } : { resumeUrl: result.url })
+                let updatedData;
+                if (type === 'experienceLetter' && uploadingExpIdx !== null) {
+                    const newExperience = [...data.experience]
+                    newExperience[uploadingExpIdx] = { ...newExperience[uploadingExpIdx], internshipLetterUrl: result.url }
+                    updatedData = {
+                        ...data,
+                        experience: newExperience
+                    }
+                } else {
+                    updatedData = {
+                        ...data,
+                        hero: {
+                            ...data.hero,
+                            ...(type === 'photo' ? { photoUrl: result.url } : { resumeUrl: result.url })
+                        }
                     }
                 }
                 // Update local state
@@ -111,7 +123,7 @@ export default function AdminPage() {
                     if (saveRes.ok) {
                         setIsSuccess(true)
                         setTimeout(() => setIsSuccess(false), 3000)
-                        alert(`${type === 'photo' ? 'Photo' : 'Resume'} uploaded and saved successfully!`)
+                        alert(`${type === 'photo' ? 'Photo' : type === 'resume' ? 'Resume' : 'Internship Letter'} uploaded and saved successfully!`)
                     } else {
                         alert("File uploaded but save failed. Please click 'Sync Changes'.")
                     }
@@ -121,7 +133,13 @@ export default function AdminPage() {
             } else {
                 alert("Upload failed: " + (result.error || "Unknown error"))
             }
-        } catch (err) { alert("Upload failed.") } finally { setIsUploading(false) }
+        } catch (err) { alert("Upload failed.") } finally { 
+            setIsUploading(false)
+            if (type === 'experienceLetter') setUploadingExpIdx(null)
+        }
+        
+        // Reset file input so same file can be selected again
+        if (e.target) e.target.value = '';
     }
 
     const addItem = (section: string, categoryIndex?: number) => {
@@ -249,6 +267,7 @@ export default function AdminPage() {
                                             </button>
                                             <input type="file" ref={imageInputRef} onChange={e => handleUpload(e, 'photo')} className="hidden" accept="image/*" />
                                             <input type="file" ref={resumeInputRef} onChange={e => handleUpload(e, 'resume')} className="hidden" accept=".pdf,.doc,.docx" />
+                                            <input type="file" ref={experienceLetterInputRef} onChange={e => handleUpload(e, 'experienceLetter')} className="hidden" accept=".pdf,.png,.jpg,.jpeg" />
                                         </div>
                                     </div>
                                 </div>
@@ -407,6 +426,24 @@ export default function AdminPage() {
                                                 const list = [...data.experience]; list[idx].responsibilities = e.target.value.split("\n");
                                                 setData({ ...data, experience: list })
                                             }} rows={4} className="w-full bg-background border border-border px-6 py-4 rounded-2xl outline-none leading-relaxed" />
+                                        </div>
+                                        <div className="pt-4 border-t border-border/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                            <div className="space-y-1">
+                                                <label className="text-[10px] font-black uppercase text-muted-foreground">Internship/Experience Letter</label>
+                                                {exp.internshipLetterUrl ? (
+                                                    <a href={exp.internshipLetterUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline block w-max font-medium overflow-hidden text-ellipsis max-w-[200px] sm:max-w-xs whitespace-nowrap">
+                                                        {exp.internshipLetterUrl.split('/').pop()}
+                                                    </a>
+                                                ) : (
+                                                    <p className="text-xs text-muted-foreground">No letter uploaded</p>
+                                                )}
+                                            </div>
+                                            <button onClick={() => {
+                                                setUploadingExpIdx(idx);
+                                                experienceLetterInputRef.current?.click();
+                                            }} className="flex items-center justify-center gap-2 bg-secondary/50 px-4 py-2 rounded-xl font-bold hover:bg-secondary border border-border/50 transition-all text-xs whitespace-nowrap">
+                                                <Upload size={14} /> {isUploading && uploadingExpIdx === idx ? "Uploading..." : "Upload Letter"}
+                                            </button>
                                         </div>
                                     </div>
                                 ))}
